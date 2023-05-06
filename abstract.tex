@@ -1,163 +1,178 @@
 \documentclass{icsc}
 
+
+\usepackage{caption}
+\usepackage{subcaption}
+
 \begin{document}
 
 \begin{center}
-  \fontsize{14}{20}{\bf Instructions for Preparing an Abstract for \\[3pt]
-                        the International Cycling Safety Conference 2017}
+  \fontsize{14}{20}{\bf Comparison of Electromechanical Means of Stabilizing a
+    Bicycle}
 \end{center}
 
 %%%%%%%%%%%%%%%% authors %%%%%%%%%%%%%%%
 \begin{center}
-  \normalsize{\bf{A. B. Authorone$^{*}$,
-                  C. Authortwo$^\#$,
-                  D. E Authorthree$^\dag$}}
+  \normalsize{\bf{Jason~K.~Moore}}
 \end{center}
 
 \begin{center}
   \begin{tabular}{c}
-    $^*$ Faculty of Mechanical Engineering\\
-    University of Technology\\
-    Address, Postcode City, Country\\
-    e-mail: email1@address\\
-  \end{tabular}
-  \begin{tabular}{c}
-    $^\#$ Institute for Mechatronics\\
-     University of Technology\\
-    Address, Postcode City, Country\\
-    e-mail: email2@address\\
-  \end{tabular} \\ \vspace{2.5ex}
-  \begin{tabular}{c}
-    $^\dag$ Laboratory for Engineering Mechanics\\
-     Delft University of Technology\\
-     Mekelweg 2, NL-2628~CD~~Delft, The Netherlands\\
-     e-mail: D.E.Authorthree@tudelft.nl\\
+    Faculty of Mechanical Engineering\\
+    Delft University of Technology\\
+    Mekelweg 2, 2628 CD Delft, The Netherlands\\
+    e-mail: j.k.mooore@tudelft.nl\\
   \end{tabular}
 \end{center}
 
 \begin{keywords}
-guidelines for authors,
-template,
-final symposium paper,
-formatting instructions.
+  bicycle,
+  stability,
+  control,
+  robot,
+  gyroscope,
+  ADAS
 \end{keywords}
 
 \section{INTRODUCTION}
 %
-The first page begins with the title of the paper, the authors, affiliations,
-and keywords as it is shown in this document. The title of the paper should be
-typed in 14 pt bold font and be centered. Authors' names should be typed in
-bold font. Affiliations should be typed in a general formatting style, centered
-within a corresponding bounding box. The authors should be followed by a list
-of keywords after the header ``Keywords:'' typed in bold 11 pt font. The
-keywords should be separated by commas. A dot should be place after the last
-keyword. Up to five keywords are allowed. Title, affiliations, and keywords
-have to fit on the first page. The introduction paragraph may start on the
-first page provided there is enough space.
+An uncontrolled bicycle can be self-stable at some travel speeds due to the
+nature of its design~\cite{Meijaard2007a}. This self-stability relieves the
+rider of some of the burden of control and at high speeds riders can balance a
+bicycle without much conscious thought. At low speeds, a bicycle becomes more
+difficult to control, increasing the chance of falls. It has long been
+hypothesized that adding electromechanical sensing and actuation can stabilize
+the vehicle relieving some of the human control burden. For safety purposes, I
+am interested in systems that share control with the rider but most past work
+focus on human independent ``robot riders''.
 
-All text should be written in 11 pt Liberation Serif font. General text should
-be justified and divided into logical paragraphs separated by 11 pt spaces.
-Single line spaces are required. All section headers except the references
-header should be numbered with Arabic numbers without a trailing dot. Top level
-headers should be typed in capital characters. Subsections should be numbered
-with multilevel numbering. A maximum of two sublevels is allowed. Subheaders
-should be typed in normal word case. Font size of 11 pt should be used if not
-specified otherwise.
+Van Zytveld~\cite{Zytveld1975} was likely the first to investigate and build a
+robot rider for his 1975 Stanford PhD thesis. He used an actuated inverted
+pendulum that mimicked rider lean, but was not successful in demonstrating what
+his theoretic control model predicted. It was not until the mid 1980s that
+someone successfully demonstrated an automatically balanced
+motorcycle~\cite{Ruijs1986a}. Ruijs and Pacejka used a steering motor to
+stabilize the motion recognizing that simple positive roll rate feedback can
+stabilize the vehicle at low speeds, i.e. ``steer into the direction of roll
+motion''.
+% This same approach was used by the 2005 DARPA challenge vehicle Ghostrider~\cite{todo}.
+In 2005, the Murata Manufacturing company demonstrated ``Murata Boy'', a
+bicycle robot which utilized a reaction wheel capable of generating stabilizing
+roll torques~\cite{WikipediaAuthors2023}. In 2006, several Dartmouth University
+undergraduates developed a simple motor driven flywheel encased in the front
+wheel that increases the front wheel spin momentum providing a roll motion
+stabilizing effect~\cite{Ward2006}. This application used the same principle as
+the rear wheel flywheel of the 1921 Giesberger Gyrocar~\cite{Self2023}. In
+2013, Lit Motors~Inc. demonstrated a pair of control moment gyros capable of
+balancing a two seater enclosed motorcycle at low speed that used the same
+principle used in Brennan's 1903 Gyro
+monorail~\cite{WikipediaGyromonorail2012}. There have been numerous other
+theoretical and realized machines that utilize one or more of these five
+actuation methods throughout the years.
 
-% TODO : The Liberation Serif font is only available if XeTeX or LuaTex is
-% used. This was the default font in the Libreoffice template. For now, just
-% use the default font that PDFLaTeX can handle.
+With over a century of innovations in automatically stabilizing single track
+vehicles, nothing has ever become commercially viable or demonstrated enhanced
+rider or passenger safety. In this study, I will describe how each of these
+roll stabilization methods work, what their advantages and disadvantages are,
+and discuss whether they can be useful for bicycle safety.
 
-\section{GENERAL INSTRUCTIONS}
+\section{STEER MOTOR SYSTEM}
 %
-The abstract must be written in English. It must contain the name, address and
-e-mail address of each author. The abstract should be no longer than three
-pages including references. All page margins should be 1''. The paper used
-should be letter size (8.5'' $\times$ 11.0''). It is suggested to use styles
-for formatting and automatic reference, figure numbering to avoid editorial
-errors.  To avoid compatibility problems it is advised to use only upper or
-lower case Latin alphabet, numbers and the underscore character in the file
-name.
-
-\subsection{Equations}
+As an example for this abstract, I will demonstrate roll and steer motion
+stabilization using an ideal motor actuator that applies equal and opposite
+torque to the steered frame from the ridden frame; same as \cite{Ruijs1986a}. I
+start by assuming that the bicycle's basic state (steer and roll configuration
+and motion) can be accurately measured by using inertial measurement units and
+state estimation. The bicycle dynamics model is based on the linearized
+Carvallo-Whipple model from \cite{Meijaard2007a} but populated with more
+realistic numerical parameters. By assuming full state feedback, the system can
+be modeled by these linear state space equations:
 %
-Equations should be numbered continuously according to the format shown in
-Equation~(\ref{eq:equ1}):
-\begin{equation} \label{eq:equ1}
-  e^{i\pi} + 1 = 0,
-\end{equation}
-where the unknown symbols are explained after the equation.
+\begin{align}
+  \dot{\bar{x}} = \left( \mathbf{A} - \mathbf{B} \mathbf{K} \right) \bar{x} + \mathbf{B} \bar{u}
+\end{align}
 
-\subsection{Figures and tables}
+\(\mathbf{A}\) represents the passive dynamics of bicycle and \(\mathbf{B}\)
+gives the input dynamics from the rider or steer motor applied steering torque.
+Full state feedback can be used to drive the steering motor torque
+\(T_{\delta,m}=-\mathbf{K}\bar{x}\), giving the closed loop dynamics
+\(\mathbf{A} - \mathbf{B} \mathbf{K}\). The state and input vectors are:
 %
-\begin{table}[h!]
-  \begin{center}
-    \caption{Example of a table with a short caption.} \label{tab:tab1}
-    \begin{tabular}{|c|ccc|}
-      \hline
-      &  $x$  &  $y$  &  $z$ \\
-      \hline
-      $x'$  &  $\alpha_1$ & $\beta_1$ & $\gamma_1$ \\
-      $y'$  &  $\alpha_2$ & $\beta_2$ & $\gamma_2$ \\
-      $z'$  &  $\alpha_3$ & $\beta_3$ & $\gamma_3$ \\
-      \hline
-    \end{tabular}
-  \end{center}
-\end{table}
-All figures should be clearly readable and relevant to the presented text. Use
-of at least 300\,dpi resolution for pictures and 600\,dpi for line art is
-required, 1\,px wide lines in figures should be avoided as they may become
-invisible in print. There is no limit on the amount of figures as long as they
-do not dominate the text and the total length of the paper is within the
-specified limits. Both figures and tables should be centred on the page.
-
-\begin{figure}[h!]
-\begin{center}
-  \includegraphics[width=55mm]{figure1}
-  \caption{An example of a figure caption. Use 10~pt Times New Roman.
-           For long captions, use a text width of 13~cm.
-           Use the same style for the tables.} \label{fig:fig1}
-\end{center}
+\begin{align}
+  \bar{x} =
+    \begin{bmatrix}
+      \phi \\
+      \dot{\phi} \\
+      \delta \\
+      \dot{\delta}
+    \end{bmatrix} =
+    \begin{bmatrix}
+      \textrm{roll angle} \\
+      \textrm{roll rate} \\
+      \textrm{steer angle} \\
+      \textrm{steer rate}
+    \end{bmatrix}
+  \textrm{ and }
+  \bar{u} =
+    \begin{bmatrix}
+      T_{\delta} \\
+    \end{bmatrix} =
+    \begin{bmatrix}
+      \textrm{rider applied steer torque} \\
+    \end{bmatrix}
+\end{align}
+%
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{lqr-eig.png}
+    \caption{Root locus of eigenvalue components with the LQR gain scheduling
+      across speed.
+      Blue lines are the passive bicycle dynamics and orange are the
+      automatically controlled dynamics. Solid lines are real parts and dotted
+      lines are imaginary parts.}
+    \label{fig:lqr-eig}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{lqr-steer-roll-bode-compare-v01.png}
+    \caption{Bode plots for rider applied steer to roll dynamics for the
+      uncontrolled bicycle (blue) and automatically controlled bicycle
+      (orange).}
+    \label{fig:bode}
+  \end{subfigure}
+  \caption{Uncontrolled and controlled dynamics.}
 \end{figure}
-Figures, graphs and tables must be included in the same style as shown for
-Figure~\ref{fig:fig1} and Table~\ref{tab:tab1}.
 
-
-\subsection{References}
-%
-Bibliographical citations should be written in the order in which they are
-cited, see the References section below, where Reference~\cite{Pac02}
-exemplifies the case of a textbook, while Reference~\cite{Ber07} is an article
-in conference proceedings and Reference~\cite{Sha71} is an article in a
-journal. Use can be made of a pre-existing bibtex style which uses a similar
-style.
-
-\section{PROCEEDINGS}
-%
-The final version of your extended abstract will be part of the proceedings.
-These proceedings will be made available to the conference participants and the
-public at the start of the conference via a citeable online repository.
+By applying a maximum torque scaled linear quadratic regulator (LQR) across all
+speeds the scheduled feedback gains \(\mathbf{K}\) can be found to stabilize
+the vehicle at almost all speeds with minimal effect to the dynamics of the
+vehicle besides the positive aspect of stabilization, similar to
+\cite{Schwab2008}. Figure~\ref{fig:lqr-eig} shows that the bicycle can be
+stabilized down to 1 m/s and that the natural frequencies and time constants do
+not change drastically, leaving the bicycle's dynamics intact. It is also
+important to note that from the rider's perspective \(\mathbf{A} - \mathbf{B}
+\mathbf{K}\) is simply a new plant they must control, yet through the same
+passive input filter which is a function of the unchanged \(\mathbf{B}\) matrix
+governing the rider's steer input. Figure~\ref{fig:bode} shows that at 1 m/s
+the rider will experience a less damped response to steering in the 0.3 to 0.8
+Hz bandwidth, so the handling is not necessarily maintained when applying
+automatic control. To keep the handling the same, more elaborate model
+reference control would be required.
 
 \section{CONCLUSIONS}
 %
-We very much look forward to welcoming you to Davis! Best wishes and the
-warmest regards from the Organizing Committee of International Cycling Safety
-Conference 2017.
+In the presentation, I will share similar analyses for a moving mass actuator,
+paired control moment gyros, reaction wheel, and front wheel internal flywheel
+and show how most are equivalent ways of achieving the same goal. I will then
+compare them for feasibility and effectiveness. This will be presented in a
+both historical and modern context of realized vehicles and why the vehicles
+may or may not be able to enhance safety and be commercially viable.
 
-\begin{thebibliography}{6}
-% \begin{thebibliography}{66} % use this for more than 9 references
-  \bibitem{Pac02} H.~B.~Pacejka, \textit{Tyre and Vehicle Dynamics},
-    Butterworth and Heinemann, Oxford, 2002.
-  \bibitem{Ber07} E.~Bertolazzi, F.~Biral, M.~Da~Lio and V.~Cossalter, ``The
-    influence of rider's upper body motions on motorcycle minimum time
-    maneuvering'', in C.~L.~Bottasso, P.~Masarati and L.~Trainelli (eds),
-    \textit{Proceedings, Multibody Dynamics 2007, ECCOMAS Thematic Conference},
-    Milano, Italy, 25--28 June 2007, Politecnico di Milano, Milano, 2007,
-    15~pp.
-  \bibitem{Sha71} R.~S.~Sharp, ``The stability and control of motorcycles'',
-    \textit{Proceedings of the IMechE, Part C, Journal of Mechanical
-    Engineering Science} \textbf{13} (1971), pp.~316--329.
-\end{thebibliography}
+\bibliographystyle{plain}
+\bibliography{ICSC2023}
 
 \end{document}
 
