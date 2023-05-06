@@ -166,10 +166,7 @@
   \fancyhf{} % clear all header and footer fields
   \renewcommand{\headrulewidth}{0pt}
   \lhead{\raisebox{0.75\height}{\includegraphics[width=2.34in]{conference-logo}}}
-  \rhead{\footnotesize{6\ts{th} Annual International Cycling Safety Conference\\%
-    21--22 September 2017, Davis, California, USA\vspace{5mm}}}%
-  \lfoot{\centering\scriptsize{This work is licensed under the Creative Commons Attribution 4.0
-    Unported License. To view a copy of this license, visit
-    \url{http://creativecommons.org/licenses/by/4.0/.}}}
+  \rhead{\footnotesize{11\ts{th} International Cycling Safety Conference\\%
+    15--17 November 2023, The Hague, the Netherlands\vspace{5mm}}}%
 }
 \endinput
